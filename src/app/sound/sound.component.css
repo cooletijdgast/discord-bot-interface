@@ -31,6 +31,7 @@ a {
   min-width: 70px;
   margin: 0.5rem auto;
   box-sizing: border-box;
+  cursor: pointer;
 
   /* flexbox */
   order: 0;

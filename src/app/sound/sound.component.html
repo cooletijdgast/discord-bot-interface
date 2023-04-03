@@ -1,6 +1,6 @@
-<h2>My Sounds</h2>
+<h2>Kut herrie</h2>
 <section class="sound-menu">
-  <a *ngFor="let sound of sounds">
+  <a *ngFor="let sound of sounds" (click)="copy(sound.name)" >
     {{ sound.name }}
   </a>
 </section>

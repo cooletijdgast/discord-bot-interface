@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { SoundService } from '../services/sound.service';
 import { Sound } from '../model/sound';
+import { Clipboard } from '@angular/cdk/clipboard';
 
 @Component({
   selector: 'app-sound',
@@ -9,8 +10,12 @@ import { Sound } from '../model/sound';
 })
 export class SoundComponent {
   public sounds: Sound[] = [];
+  public value: string = '';
 
-  constructor(private soundService: SoundService) {}
+  constructor(
+    private soundService: SoundService,
+    private clipboard: Clipboard
+  ) {}
 
   private getSounds(): void {
     this.soundService.getSounds().subscribe((sounds) => {
@@ -21,11 +26,13 @@ export class SoundComponent {
 
   ngOnInit(): void {
     this.getSounds();
-    // console.log(this.sounds);
-    // console.log(this.sounds);
   }
 
   private sortOnName(): void {
     this.sounds = this.sounds.sort((a, b) => a.name.localeCompare(b.name));
+  }
+
+  public copy(value: string) {
+    this.clipboard.copy(`!${value}`);
   }
 }
