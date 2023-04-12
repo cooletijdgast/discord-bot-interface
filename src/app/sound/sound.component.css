@@ -1,6 +1,6 @@
 /* DashboardComponent's private CSS styles */
 
-h2 {
+.appTitle {
   text-align: center;
 }
 
@@ -19,8 +19,8 @@ h2 {
 }
 
 a {
-  background-color: #3f525c;
-  border-radius: 2px;
+  background-color: #404054;
+  border-radius: 8px;
   padding: 1rem;
   font-size: 1.2rem;
   text-decoration: none;

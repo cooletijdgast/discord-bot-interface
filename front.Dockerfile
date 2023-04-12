@@ -12,4 +12,4 @@ COPY . ./
 
 EXPOSE 4200
 
-CMD ["ng", "serve", "--host", "0.0.0.0"]2kDSLRaTDj3qYL5
+CMD ["ng", "serve", "--host", "0.0.0.0"]
