@@ -4,7 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --host 0.0.0.0",
-    "build": "ng build",
+    "build": "docker build -f front.Dockerfile . -t cooletijdgast/discord-web-frontend",
+    "push": "docker push cooletijdgast/discord-web-frontend", 
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },

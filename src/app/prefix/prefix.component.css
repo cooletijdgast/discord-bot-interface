@@ -1,0 +1,10 @@
+.prefixSection{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+label{
+  margin-right: 15px;
+  font-size: large;
+}

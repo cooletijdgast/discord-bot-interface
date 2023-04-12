@@ -6,9 +6,10 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
 
 import { AppComponent } from './app.component';
 import { SoundComponent } from './sound/sound.component';
+import { PrefixComponent } from './prefix/prefix.component';
 
 @NgModule({
-  declarations: [AppComponent, SoundComponent],
+  declarations: [AppComponent, SoundComponent, PrefixComponent],
   imports: [BrowserModule, HttpClientModule, FormsModule, ClipboardModule],
   providers: [],
   bootstrap: [AppComponent],

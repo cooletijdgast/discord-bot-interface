@@ -1,0 +1,13 @@
+<section class="prefixSection">
+  <section *ngFor="let prefix of prefixes; let prefixName; of: prefixLabels; let index = index ">
+    <input
+      type="checkbox"
+      value="{{ prefix }}"
+      id="{{ prefix }}"
+      name="{{ prefix }}"
+      [ngModel]="selectedIndex === index"
+      (change)="changeSelection($event, index)"
+    />
+    <label for="{{ prefix }}">{{ prefixName }}</label>
+  </section>
+</section>
