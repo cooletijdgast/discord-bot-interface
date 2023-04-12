@@ -7,6 +7,7 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
 import { AppComponent } from './app.component';
 import { SoundComponent } from './sound/sound.component';
 import { PrefixComponent } from './prefix/prefix.component';
+import { DvdBounceComponent } from './dvd-bounce/dvd-bounce.component';
 
 @NgModule({
   declarations: [AppComponent, SoundComponent, PrefixComponent],

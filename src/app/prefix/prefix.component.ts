@@ -10,7 +10,7 @@ export class PrefixComponent {
   public prefixLabels: string[] = [
     '!<sound>',
     '!next <sound>',
-    '!combo <sound> <sound>(max 2)',
+    '!combo <sound> <sound>',
   ];
   public selectedIndex: number | undefined = undefined;
 
