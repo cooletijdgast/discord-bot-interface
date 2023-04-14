@@ -16,8 +16,7 @@ export class SoundComponent {
 
   constructor(
     private soundService: SoundService,
-    private clipboard: Clipboard,
-    public prefixComp: PrefixComponent
+    private clipboard: Clipboard
   ) {}
 
   private getSounds(): void {
@@ -36,14 +35,15 @@ export class SoundComponent {
   }
 
   public copy(value: string) {
-    this.clipboard.copy(`!${value}`);
     this.getPrefix();
+    this.clipboard.copy(`!${value}`);
     console.log(this.prefix);
   }
 
-  private getPrefix(): void{
-    this.prefixComp.exportIndex.subscribe({
-      next: (v) => (this.prefix = v),
-    })
+  private getPrefix(): void {
+    this.soundService.exportIndex.subscribe({
+      next: (v) => this.prefix = v,
+    });
+    // this.prefix = this.prefixComp.exportIndex;
   }
 }
