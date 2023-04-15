@@ -44,6 +44,11 @@ export class SoundService {
     this.combo.next('<sound> <sound>');
   }
 
+  public resetPressed(sounds: Sound[]): void {
+    for (let i = 0; i < sounds.length; i++) {
+      sounds[i].pressed = false;
+    }
+  }
 
   public get exportIndex(): BehaviorSubject<string> {
     return this._exportIndex;

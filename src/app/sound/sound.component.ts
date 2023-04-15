@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Injectable } from '@angular/core';
 import { SoundService } from '../services/sound.service';
 import { Sound } from '../model/sound';
 import { Clipboard } from '@angular/cdk/clipboard';
@@ -12,7 +12,8 @@ import { PrefixComponent } from '../prefix/prefix.component';
 export class SoundComponent {
   public sounds: Sound[] = [];
   private prefix: string = '';
-  private prefixForCopy: string = ''; 
+  private valueForCopy: string = '';
+  private allowMultiple: boolean = false;
 
   constructor(
     private soundService: SoundService,
@@ -34,10 +35,22 @@ export class SoundComponent {
     this.sounds = this.sounds.sort((a, b) => a.name.localeCompare(b.name));
   }
 
-  public copy(value: string) {
+  public copyToClipboard(value: string) {
     this.getPrefix();
-    this.setSelected(value);
-    this.clipboard.copy(`!${this.prefixForCopy}${value}`);
+    this.setPrefixForCopying(this.valueForCopy);
+    if (this.prefix == 'combo ') {
+      this.allowMultiple = true;
+      this.valueForCopy = this.valueForCopy + value + ' ';
+    } else {
+      this.allowMultiple = false;
+      this.valueForCopy = value;
+    }
+    if (!this.allowMultiple) {
+      this.soundService.resetPressed(this.sounds);
+    }
+    this.showSelected(this.valueForCopy);
+    this.clipboard.copy(`!${this.prefix}${this.valueForCopy}`);
+    this.soundService.resetPressed(this.sounds);
   }
 
   private getPrefix(): void {
@@ -46,18 +59,31 @@ export class SoundComponent {
     });
   }
 
-  private setSelected(value: string): void {
+  private setPrefixForCopying(value: string): void {
     switch (this.prefix) {
       case 'default':
-        this.prefixForCopy = ''
-        this.soundService.default.next(value);
+        this.prefix = '';
         break;
       case 'next':
-        this.prefixForCopy = 'next '
-        this.soundService.next.next(value);
+        this.prefix = 'next ';
         break;
       case 'combo':
-        this.prefixForCopy = 'combo '
+        this.prefix = 'combo ';
+        break;
+      default:
+        break;
+    }
+  }
+
+  private showSelected(value: string): void {
+    switch (this.prefix) {
+      case '':
+        this.soundService.default.next(value);
+        break;
+      case 'next ':
+        this.soundService.next.next(value);
+        break;
+      case 'combo ':
         this.soundService.combo.next(value);
         break;
       default:
