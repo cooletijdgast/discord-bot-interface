@@ -1,13 +1,31 @@
 <section class="prefixSection">
-  <section *ngFor="let prefix of prefixes; let prefixName; of: prefixLabels; let index = index ">
-    <input
-      type="checkbox"
-      value="{{ prefix }}"
-      id="{{ prefix }}"
-      name="{{ prefix }}"
-      [ngModel]="selectedIndex === index"
-      (change)="changeSelection($event, index)"
-    />
-    <label for="{{ prefix }}">{{ prefixName }}</label>
+  <section>
+    <mat-checkbox
+      id="default"
+      [checked]="this.soundService.defaultSelect"
+      (click)="changeSelection($event, 0)"
+    >
+    </mat-checkbox>
+    <mat-label for="default">!{{ default }}</mat-label>
+  </section>
+  <section>
+    <mat-checkbox
+      id="next"
+      [ngModel]="selectedIndex === 1"
+      (click)="changeSelection($event, 1)"
+    >
+    </mat-checkbox>
+    <mat-label for="next">!next {{ next }}</mat-label>
+  </section>
+  <section>
+    <mat-checkbox
+      id="combo"
+      [ngModel]="selectedIndex === 2"
+      (click)="changeSelection($event, 2)"
+    >
+    </mat-checkbox>
+    <mat-label for="combo">!combo {{ combo }}</mat-label>
   </section>
 </section>
+
+<!-- -->

@@ -11,8 +11,8 @@ import { PrefixComponent } from '../prefix/prefix.component';
 })
 export class SoundComponent {
   public sounds: Sound[] = [];
-  public value: string = '';
-  public prefix: string = '';
+  private prefix: string = '';
+  private prefixForCopy: string = ''; 
 
   constructor(
     private soundService: SoundService,
@@ -36,14 +36,32 @@ export class SoundComponent {
 
   public copy(value: string) {
     this.getPrefix();
-    this.clipboard.copy(`!${value}`);
-    console.log(this.prefix);
+    this.setSelected(value);
+    this.clipboard.copy(`!${this.prefixForCopy}${value}`);
   }
 
   private getPrefix(): void {
     this.soundService.exportIndex.subscribe({
-      next: (v) => this.prefix = v,
+      next: (v) => (this.prefix = v),
     });
-    // this.prefix = this.prefixComp.exportIndex;
+  }
+
+  private setSelected(value: string): void {
+    switch (this.prefix) {
+      case 'default':
+        this.prefixForCopy = ''
+        this.soundService.default.next(value);
+        break;
+      case 'next':
+        this.prefixForCopy = 'next '
+        this.soundService.next.next(value);
+        break;
+      case 'combo':
+        this.prefixForCopy = 'combo '
+        this.soundService.combo.next(value);
+        break;
+      default:
+        break;
+    }
   }
 }

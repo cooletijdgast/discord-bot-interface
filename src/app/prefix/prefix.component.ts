@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { SoundService } from '../services/sound.service';
@@ -8,20 +8,27 @@ import { SoundService } from '../services/sound.service';
   templateUrl: './prefix.component.html',
   styleUrls: ['./prefix.component.css'],
 })
-export class PrefixComponent {
+export class PrefixComponent implements OnInit {
   public prefixes: string[] = ['default', 'next', 'combo'];
-  public prefixLabels: string[] = [
-    '!<sound>',
-    '!next <sound>',
-    '!combo <sound> <sound>',
-  ];
+  public prefixLabels: string = '';
 
-  constructor(private soundService: SoundService) {}
+  constructor(public soundService: SoundService) {}
+
+  public default: string = '<sound>';
+  public next: string = '<sound>';
+  public combo: string = '<sound> <sound>';
+
+  ngOnInit() {
+    this.soundService.default.subscribe((v) => (this.default = v));
+    this.soundService.next.subscribe((v) => (this.next = v));
+    this.soundService.combo.subscribe((v) => (this.combo = v));
+  }
 
   public selectedIndex: number | undefined = undefined;
 
   public changeSelection(event: any, index: number) {
     this.selectedIndex = event.target.checked ? index : undefined;
+    this.setSelected();
     this.setPrefix();
   }
 
@@ -31,5 +38,22 @@ export class PrefixComponent {
       prefix = this.prefixes[this.selectedIndex];
     }
     this.soundService.exportIndex.next(prefix);
+  }
+
+  private setSelected(): void {
+    switch (this.selectedIndex) {
+      case 1:
+        this.soundService.nextSelect = true;
+        this.soundService.defaultSelect = false;
+        break;
+      case 2:
+        this.soundService.comboSelect = true;
+        this.soundService.defaultSelect = false;
+        break;
+      default:
+        this.soundService.defaultSelect = true;
+        break;
+    }
+    this.soundService.resetPrefixValues();
   }
 }

@@ -16,12 +16,34 @@ export class SoundService {
     'default'
   );
 
+  private _combo: BehaviorSubject<string> = new BehaviorSubject<string>(
+    '<sound> <sound>'
+  );
+
+  private _next: BehaviorSubject<string> = new BehaviorSubject<string>(
+    '<sound>'
+  );
+
+  private _default: BehaviorSubject<string> = new BehaviorSubject<string>(
+    '<sound>'
+  );
+
+  private _defaultSelect = true;
+  private _nextSelect = false;
+  private _comboSelect = false;
+
   constructor(private http: HttpClient) {}
 
   public getSounds(): Observable<Sound[]> {
-    // console.log(this.soundURL + ':' + this.soundPort);
     return this.http.get<Sound[]>(this.soundURL);
   }
+
+  public resetPrefixValues(): void{
+    this.default.next('<sound>');
+    this.next.next('<sound>');
+    this.combo.next('<sound> <sound>');
+  }
+
 
   public get exportIndex(): BehaviorSubject<string> {
     return this._exportIndex;
@@ -29,5 +51,47 @@ export class SoundService {
 
   public set exportIndex(value: BehaviorSubject<string>) {
     this._exportIndex = value;
+  }
+
+  public get default(): BehaviorSubject<string> {
+    return this._default;
+  }
+  public set default(value: BehaviorSubject<string>) {
+    this._default = value;
+  }
+
+  public get next(): BehaviorSubject<string> {
+    return this._next;
+  }
+  public set next(value: BehaviorSubject<string>) {
+    this._next = value;
+  }
+
+  public get combo(): BehaviorSubject<string> {
+    return this._combo;
+  }
+  public set combo(value: BehaviorSubject<string>) {
+    this._combo = value;
+  }
+
+  public get defaultSelect() {
+    return this._defaultSelect;
+  }
+  public set defaultSelect(value) {
+    this._defaultSelect = value;
+  }
+
+  public get nextSelect() {
+    return this._nextSelect;
+  }
+  public set nextSelect(value) {
+    this._nextSelect = value;
+  }
+
+  public get comboSelect() {
+    return this._comboSelect;
+  }
+  public set comboSelect(value) {
+    this._comboSelect = value;
   }
 }
