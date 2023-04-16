@@ -14,14 +14,36 @@ import { PrefixComponent } from '../prefix/prefix.component';
 })
 export class SoundComponent {
   public sounds: Sound[] = [];
+  public maximumSelectedReached: boolean = false;
+
   private prefix: string = '';
   private valueForCopy: string = '';
   private allowMultiple: boolean = false;
+  private comboCount: number = 0;
 
   constructor(
     private soundService: SoundService,
     private clipboard: Clipboard
   ) {}
+
+  public copyToClipboard(value: string) {
+    this.getCurrentPrefix();
+    this.setPrefixForCopying();
+    if (this.prefix == 'combo ') {
+      this.handleComboSettings(value);
+    } else {
+      this.allowMultiple = false;
+      this.valueForCopy = value;
+    }
+
+    this.setSelectedSoundForDisplay(this.valueForCopy);
+    this.clipboard.copy(`!${this.prefix}${this.valueForCopy}`);
+
+    if (!this.allowMultiple) {
+      this.soundService.resetPressed(this.sounds);
+      this.valueForCopy = '';
+    }
+  }
 
   private getSounds(): void {
     this.soundService.getSounds().subscribe((sounds) => {
@@ -38,27 +60,7 @@ export class SoundComponent {
     this.sounds = this.sounds.sort((a, b) => a.name.localeCompare(b.name));
   }
 
-  public copyToClipboard(value: string) {
-    this.getPrefix();
-    this.setPrefixForCopying();
-    if (this.prefix == 'combo ') {
-      this.allowMultiple = true;
-      this.valueForCopy = this.valueForCopy + value + ' ';
-    } else {
-      this.allowMultiple = false;
-      this.valueForCopy = value;
-    }
-    
-    this.setSelectedSound(this.valueForCopy);
-    console.log(this.valueForCopy);
-    this.clipboard.copy(`!${this.prefix}${this.valueForCopy}`);
-    if (!this.allowMultiple) {
-      this.soundService.resetPressed(this.sounds);
-      this.valueForCopy = '';
-    }
-  }
-
-  private getPrefix(): void {
+  private getCurrentPrefix(): void {
     this.soundService.exportIndex.subscribe({
       next: (v) => (this.prefix = v),
     });
@@ -80,7 +82,7 @@ export class SoundComponent {
     }
   }
 
-  private setSelectedSound(value: string): void {
+  private setSelectedSoundForDisplay(value: string): void {
     switch (this.prefix) {
       case '':
         this.soundService.default.next(value);
@@ -93,6 +95,17 @@ export class SoundComponent {
         break;
       default:
         break;
+    }
+  }
+
+  private handleComboSettings(value: string): void {
+    if (this.comboCount < 5 && !(this.valueForCopy === (value + ' '))) {
+      this.allowMultiple = true;
+      this.valueForCopy = this.valueForCopy + value + ' ';
+      this.comboCount++;
+      console.log(this.valueForCopy)
+    } else {
+      this.maximumSelectedReached = true
     }
   }
 }

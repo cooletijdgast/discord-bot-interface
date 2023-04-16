@@ -3,8 +3,12 @@
 <section class="sound-menu">
   <a
     *ngFor="let sound of sounds"
-    (click)="copyToClipboard(sound.name); sound.pressed = !sound.pressed"
-    [ngClass]="sound.pressed ? 'sound-button-clicked' : 'sound-button'"
+    (click)="copyToClipboard(sound.name); sound.pressed = true"
+    [ngClass]="
+      sound.pressed && !maximumSelectedReached
+        ? 'sound-button-clicked'
+        : 'sound-button'
+    "
   >
     {{ sound.name }}
   </a>
