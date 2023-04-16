@@ -1,6 +1,6 @@
 import { Component, Injectable } from '@angular/core';
-import { SoundService } from '../services/sound.service';
-import { Sound } from '../model/sound';
+import { SoundService } from '../../services/sound.service';
+import { Sound } from '../../model/sound';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { PrefixComponent } from '../prefix/prefix.component';
 

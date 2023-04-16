@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
-import { SoundService } from '../services/sound.service';
+import { SoundService } from '../../services/sound.service';
 import { SoundComponent } from '../sound/sound.component';
 
 @Component({
