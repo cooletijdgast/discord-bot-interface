@@ -13,7 +13,7 @@ export class PrefixComponent implements OnInit {
   public prefixes: string[] = ['default', 'next', 'combo'];
   public prefixLabels: string = '';
 
-  constructor(public soundService: SoundService) {}
+  constructor(public soundService: SoundService, private soundComponent: SoundComponent) {}
 
   public default: string = '<sound>';
   public next: string = '<sound>';
@@ -31,6 +31,7 @@ export class PrefixComponent implements OnInit {
     this.selectedIndex = event.target.checked ? index : undefined;
     this.setSelected();
     this.setPrefix();
+    this.soundService.resetPressed(this.soundComponent.sounds);
   }
 
   private setPrefix(): void {

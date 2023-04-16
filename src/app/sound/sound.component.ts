@@ -9,6 +9,9 @@ import { PrefixComponent } from '../prefix/prefix.component';
   templateUrl: './sound.component.html',
   styleUrls: ['./sound.component.css'],
 })
+@Injectable({
+  providedIn: 'root',
+})
 export class SoundComponent {
   public sounds: Sound[] = [];
   private prefix: string = '';
@@ -37,7 +40,7 @@ export class SoundComponent {
 
   public copyToClipboard(value: string) {
     this.getPrefix();
-    this.setPrefixForCopying(this.valueForCopy);
+    this.setPrefixForCopying();
     if (this.prefix == 'combo ') {
       this.allowMultiple = true;
       this.valueForCopy = this.valueForCopy + value + ' ';
@@ -45,12 +48,14 @@ export class SoundComponent {
       this.allowMultiple = false;
       this.valueForCopy = value;
     }
+    
+    this.setSelectedSound(this.valueForCopy);
+    console.log(this.valueForCopy);
+    this.clipboard.copy(`!${this.prefix}${this.valueForCopy}`);
     if (!this.allowMultiple) {
       this.soundService.resetPressed(this.sounds);
+      this.valueForCopy = '';
     }
-    this.showSelected(this.valueForCopy);
-    this.clipboard.copy(`!${this.prefix}${this.valueForCopy}`);
-    this.soundService.resetPressed(this.sounds);
   }
 
   private getPrefix(): void {
@@ -59,7 +64,7 @@ export class SoundComponent {
     });
   }
 
-  private setPrefixForCopying(value: string): void {
+  private setPrefixForCopying(): void {
     switch (this.prefix) {
       case 'default':
         this.prefix = '';
@@ -75,7 +80,7 @@ export class SoundComponent {
     }
   }
 
-  private showSelected(value: string): void {
+  private setSelectedSound(value: string): void {
     switch (this.prefix) {
       case '':
         this.soundService.default.next(value);
