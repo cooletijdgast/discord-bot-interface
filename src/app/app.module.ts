@@ -11,7 +11,7 @@ import { DvdBounceComponent } from './components/dvd-bounce/dvd-bounce.component
 import { MaterialExampleModule } from './material.module';
 
 @NgModule({
-  declarations: [AppComponent, SoundComponent, PrefixComponent],
+  declarations: [AppComponent, SoundComponent, PrefixComponent, DvdBounceComponent],
   imports: [BrowserModule, HttpClientModule, FormsModule, ClipboardModule, MaterialExampleModule],
   providers: [],
   bootstrap: [AppComponent],
