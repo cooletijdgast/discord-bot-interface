@@ -1,0 +1,8 @@
+.custom-dialog-container {
+  transform: translate(-50%, -50%);
+}
+
+mat-dialog-content {
+  overflow: hidden;
+}
+

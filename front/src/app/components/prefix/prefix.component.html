@@ -1,0 +1,37 @@
+<section class="prefixSection">
+  <section>
+    <mat-checkbox
+      (click)="changeSelection($event, 0)"
+      [checked]="this.soundService.defaultSelect"
+      id="default"
+    >
+    </mat-checkbox>
+    <mat-label for="default">!{{ default }}</mat-label>
+  </section>
+  <section>
+    <mat-checkbox
+      (click)="changeSelection($event, 1)"
+      [ngModel]="selectedIndex === 1"
+      id="next"
+    >
+    </mat-checkbox>
+    <mat-label for="next">!next {{ next }}</mat-label>
+  </section>
+  <section>
+    <mat-checkbox
+      (click)="changeSelection($event, 2)"
+      [ngModel]="selectedIndex === 2"
+      id="combo"
+    >
+    </mat-checkbox>
+    <mat-label for="combo">!combo {{ combo }}</mat-label>
+  </section>
+  <section>
+    <mat-label (click)="refreshSounds()" style="cursor:pointer; margin-left: 10px">refresh list</mat-label>
+  </section>
+  <section>
+    <add-sound></add-sound>
+  </section>
+</section>
+
+<!-- -->

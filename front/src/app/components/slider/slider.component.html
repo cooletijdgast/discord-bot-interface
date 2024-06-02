@@ -1,0 +1,11 @@
+<mat-slider
+  [disabled]="disabled"
+  [discrete]="thumbLabel"
+  [max]="max"
+  [min]="min"
+  [showTickMarks]="showTicks"
+  [step]="step"
+  class="sound-length-slider">
+  <input #slider [(ngModel)]="begin" matSliderStartThumb>
+  <input #slider [(ngModel)]="end" matSliderEndThumb>
+</mat-slider>
