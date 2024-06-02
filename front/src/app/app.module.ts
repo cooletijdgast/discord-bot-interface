@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule, HammerModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {HttpClientModule} from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
 import {ClipboardModule} from '@angular/cdk/clipboard';
 
@@ -15,11 +15,7 @@ import {MatSliderModule} from "@angular/material/slider";
 import {MatInputModule} from "@angular/material/input";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 
-@NgModule({
-  declarations: [AppComponent, SoundComponent, PrefixComponent],
-  imports: [BrowserModule, BrowserAnimationsModule, HttpClientModule, FormsModule, ClipboardModule, MatButtonModule, AddSound, AddSoundDialog, HammerModule, MatSliderModule, MatButtonModule, FormsModule, MatInputModule, MatCheckboxModule],
-  providers: [{provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: true, direction: 'ltr'}}],
-  bootstrap: [AppComponent],
-})
+@NgModule({ declarations: [AppComponent, SoundComponent, PrefixComponent],
+    bootstrap: [AppComponent], imports: [BrowserModule, BrowserAnimationsModule, FormsModule, ClipboardModule, MatButtonModule, AddSound, AddSoundDialog, HammerModule, MatSliderModule, MatButtonModule, FormsModule, MatInputModule, MatCheckboxModule], providers: [{ provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { hasBackdrop: true, direction: 'ltr' } }, provideHttpClient(withInterceptorsFromDi())] })
 export class AppModule {
 }
