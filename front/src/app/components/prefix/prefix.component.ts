@@ -1,29 +1,40 @@
-import { Component, OnInit } from '@angular/core';
-import { SoundService } from '../../services/sound.service';
-import { SoundComponent } from '../sound/sound.component';
+import {Component, OnInit} from '@angular/core';
+import {SoundService} from '../../services/sound.service';
+import {SoundComponent} from '../sound/sound.component';
+import {MatCheckboxModule} from "@angular/material/checkbox";
+import {MatInputModule} from "@angular/material/input";
+import {FormsModule} from "@angular/forms";
+import {AddSound} from "../add-sound/add-sound";
 
 @Component({
-  selector: 'app-prefix',
+  selector: 'prefix',
   templateUrl: './prefix.component.html',
   styleUrls: ['./prefix.component.css'],
+  standalone: true,
+  imports: [
+    MatCheckboxModule,
+    MatInputModule,
+    FormsModule,
+    AddSound
+  ]
 })
 export class PrefixComponent implements OnInit {
   public prefixes: string[] = ['default', 'next', 'combo'];
   public prefixLabels: string = '';
-
-  constructor(public soundService: SoundService, private soundComponent: SoundComponent) {}
-
   public default: string = '<sound>';
   public next: string = '<sound>';
   public combo: string = '<sound> <sound>';
+  public selectedIndex: number | undefined = undefined;
+  protected readonly undefined = undefined;
+
+  constructor(public soundService: SoundService, private soundComponent: SoundComponent) {
+  }
 
   ngOnInit() {
     this.soundService.default.subscribe((v) => (this.default = v));
     this.soundService.next.subscribe((v) => (this.next = v));
     this.soundService.combo.subscribe((v) => (this.combo = v));
   }
-
-  public selectedIndex: number | undefined = undefined;
 
   public changeSelection(event: any, index: number) {
     this.selectedIndex = event.target.checked ? index : undefined;
@@ -32,7 +43,7 @@ export class PrefixComponent implements OnInit {
     this.soundService.resetPressed(this.soundComponent.sounds);
   }
 
-  public refreshSounds(){
+  public refreshSounds() {
     console.log('prefix')
     this.soundComponent.getSounds();
   }
@@ -61,6 +72,4 @@ export class PrefixComponent implements OnInit {
     }
     this.soundService.resetPrefixValues();
   }
-
-    protected readonly undefined = undefined;
 }

@@ -1,9 +1,9 @@
 <h1 class="appTitle">Kut herrie</h1>
-<app-prefix></app-prefix>
+<prefix></prefix>
 <section class="sound-menu">
   <a
-    *ngFor="let sound of sounds"
     (click)="copyToClipboard(sound.name); sound.pressed = true"
+    *ngFor="let sound of sounds"
     [ngClass]="
       sound.pressed && !maximumSelectedReached
         ? 'sound-button-clicked'

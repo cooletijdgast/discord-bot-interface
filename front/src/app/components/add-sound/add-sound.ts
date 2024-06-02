@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {MatDialog, MatDialogConfig, MatDialogModule, MatDialogRef,} from '@angular/material/dialog';
 import {MatButtonModule} from '@angular/material/button';
 import {MatFormFieldModule} from "@angular/material/form-field";
-import {FormsModule} from "@angular/forms";
+import {FormControl, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {MatSliderModule} from "@angular/material/slider";
 import {SliderComponent} from "../slider/slider.component";
 import {MatInputModule} from "@angular/material/input";
@@ -38,10 +38,10 @@ export class AddSound {
   templateUrl: 'add-sound-dialog.html',
   styleUrls: ['add-sound.css'],
   standalone: true,
-  imports: [MatButtonModule, MatFormFieldModule, FormsModule, MatSliderModule, SliderComponent, MatInputModule, MatIconModule, MatDialogModule],
+  imports: [MatSliderModule, SliderComponent, MatInputModule, MatIconModule, MatDialogModule, MatFormFieldModule, MatInputModule, FormsModule, MatButtonModule, MatIconModule, ReactiveFormsModule],
 })
 export class AddSoundDialog implements OnInit {
-  value = 'Clear me';
+  emailFormControl = new FormControl('', [Validators.required, Validators.email]);
 
   constructor(public dialogRef: MatDialogRef<AddSoundDialog>) {
   }

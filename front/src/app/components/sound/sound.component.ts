@@ -2,11 +2,15 @@ import {Component, Injectable} from '@angular/core';
 import {SoundService} from '../../services/sound.service';
 import {SavedSound} from '../../model/saved-sound.model';
 import {Clipboard} from '@angular/cdk/clipboard';
+import {PrefixComponent} from "../prefix/prefix.component";
+import {NgClass} from "@angular/common";
 
 @Component({
   selector: 'app-sound',
   templateUrl: './sound.component.html',
   styleUrls: ['./sound.component.css'],
+  standalone: true,
+  imports: [PrefixComponent, NgClass]
 })
 @Injectable({
   providedIn: 'root',
