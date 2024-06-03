@@ -12,7 +12,7 @@ import {MatIconModule} from "@angular/material/icon";
   selector: 'add-sound',
   templateUrl: './add-sound.html',
   standalone: true,
-  imports: [MatButtonModule, MatInputModule],
+  imports: [MatButtonModule, MatInputModule, MatDialogModule],
 })
 export class AddSound {
   constructor(public dialog: MatDialog) {
