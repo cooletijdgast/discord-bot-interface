@@ -30,12 +30,16 @@ app.get("/sounds", (req, res) => {
 });
 
 app.post("/sounds/", async (req, res) => {
-  console.log("receiving");
   if (soundClass.verifyFileName(req.body.filename)) {
     res.status(406).send();
   }
-  await soundClass.convertToMp3(req.body.url, req.body.filename);
-  res.status(200).send();
+  if (await soundClass.convertToMp3(req.body.url, req.body.filename)) {
+    const durationSeconds = await soundClass.extractMp3DurationInSeconds(
+      req.body.filename
+    );
+    res.status(200).json(durationSeconds);
+  }
+  res.status(500).send();
 });
 
 app.listen(PORT, HOST, () => {

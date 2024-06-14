@@ -3,9 +3,17 @@ import SoundModel from "../models/sound-model";
 import ytdl from "ytdl-core";
 import * as fs from "fs";
 import getAudioDurationInSeconds from "get-audio-duration";
+import { reject } from "lodash";
 
 export class Sound {
-  public addSound(name: string, tag?: string[]) {
+  private soundFolderPath(fileName: string): string {
+    if (!fileName.includes(".mp3")) {
+      fileName += ".mp3";
+    }
+    return `../sounds/${fileName}`;
+  }
+
+  public addSound(name: string, tag?: string[]): void {
     if (!name) {
       return;
     }
@@ -14,20 +22,30 @@ export class Sound {
     allSounds.push(sound).write();
   }
 
-  public async convertToMp3(url: string, fileName: string) {
-    if (!fileName.includes(".mp3")) {
-      fileName += ".mp3";
-    }
+  public async convertToMp3(url: string, fileName: string): Promise<boolean> {
+    console.log("Starting download");
     const readableStream = ytdl(url, {
       filter: "audioonly",
       quality: "highestaudio",
     });
-    const writeStream = fs.createWriteStream(`../sounds/${fileName}`);
+    const writeStream = fs.createWriteStream(this.soundFolderPath(fileName));
     readableStream.pipe(writeStream);
-    writeStream.on("finish", async () => {
-      console.log("finished\n");
-      console.log(await getAudioDurationInSeconds(`../sounds/${fileName}`));
-    });
+    const result = await new Promise<boolean>((resolve, reject) => {
+      writeStream.on("finish", () => {
+        console.log("Finished successfully");
+        resolve(true);
+      });
+
+      writeStream.on("error", (error) => {
+        console.error("An error occurred:", error);
+        reject(false);
+      });
+    }).catch(() => false);
+    return result;
+  }
+
+  public async extractMp3DurationInSeconds(fileName: string) {
+    return await getAudioDurationInSeconds(this.soundFolderPath(fileName));
   }
 
   public verifyFileName(fileName: string): boolean {
