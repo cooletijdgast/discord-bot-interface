@@ -13,6 +13,6 @@ export class AddSoundService {
   }
 
   public saveSoundFromUrl(url: string, filename: string): Observable<DownloadedSound> {
-    return this.backEndService.post<DownloadedSound>(`/sounds/${url}`, {filename: filename});
+    return this.backEndService.post<DownloadedSound>(`sounds`, {filename: filename, url: url});
   }
 }

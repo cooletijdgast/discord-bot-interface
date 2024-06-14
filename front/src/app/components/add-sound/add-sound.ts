@@ -1,12 +1,23 @@
-import {Component, OnInit} from '@angular/core';
-import {MatDialog, MatDialogConfig, MatDialogModule, MatDialogRef,} from '@angular/material/dialog';
-import {MatButtonModule} from '@angular/material/button';
-import {MatFormFieldModule} from "@angular/material/form-field";
-import {FormControl, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
-import {MatSliderModule} from "@angular/material/slider";
-import {SliderComponent} from "../slider/slider.component";
-import {MatInputModule} from "@angular/material/input";
-import {MatIconModule} from "@angular/material/icon";
+import { Component, OnInit } from '@angular/core';
+import {
+  MatDialog,
+  MatDialogConfig,
+  MatDialogModule,
+  MatDialogRef,
+} from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import {
+  FormControl,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { MatSliderModule } from '@angular/material/slider';
+import { SliderComponent } from '../slider/slider.component';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+import { AddSoundService } from 'src/app/services/add-sound.service';
 
 @Component({
   selector: 'add-sound',
@@ -15,14 +26,13 @@ import {MatIconModule} from "@angular/material/icon";
   imports: [MatButtonModule, MatInputModule, MatDialogModule],
 })
 export class AddSound {
-  constructor(public dialog: MatDialog) {
-  }
+  constructor(public dialog: MatDialog) {}
 
   public openDialog(): void {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.position = {
       top: '28vh',
-      left: '42vw'
+      left: '42vw',
     };
 
     // Custom width and height for the dialog
@@ -38,12 +48,38 @@ export class AddSound {
   templateUrl: 'add-sound-dialog.html',
   styleUrls: ['add-sound.css'],
   standalone: true,
-  imports: [MatSliderModule, SliderComponent, MatInputModule, MatIconModule, MatDialogModule, MatFormFieldModule, MatInputModule, FormsModule, MatButtonModule, MatIconModule, ReactiveFormsModule],
+  imports: [
+    MatSliderModule,
+    SliderComponent,
+    MatInputModule,
+    MatIconModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
+    FormsModule,
+    MatButtonModule,
+    MatIconModule,
+    ReactiveFormsModule,
+  ],
 })
 export class AddSoundDialog implements OnInit {
-  emailFormControl = new FormControl('', [Validators.required, Validators.email]);
+  linkFormControl = new FormControl('', [Validators.required]);
 
-  constructor(public dialogRef: MatDialogRef<AddSoundDialog>) {
+  public fileName = '';
+  public url = '';
+
+  constructor(
+    public dialogRef: MatDialogRef<AddSoundDialog>,
+    public addSoundService: AddSoundService
+  ) {}
+
+  public addSound() {
+    if (this.url && this.fileName) {
+      console.log(this.url, this.fileName, 'filename + url');
+      this.addSoundService
+        .saveSoundFromUrl(this.url, this.fileName)
+        .subscribe();
+    }
   }
 
   ngOnInit() {

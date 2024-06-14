@@ -6,3 +6,7 @@ mat-dialog-content {
   overflow: hidden;
 }
 
+mat-form-field {
+  width: 500px;
+}
+

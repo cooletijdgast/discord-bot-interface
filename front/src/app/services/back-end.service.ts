@@ -17,6 +17,7 @@ export class BackEndService {
   }
 
   public post<T>(url: string, body: any, options?: HttpOptions): Observable<T> {
-    return this.httpClient.post<T>(`${this.soundURL}/${url}`, body, options);
+    const formattedUrl = `${this.soundURL}/${url}`;
+    return this.httpClient.post<T>(`${formattedUrl}`, body, options);
   }
 }
