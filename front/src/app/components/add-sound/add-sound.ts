@@ -18,12 +18,20 @@ import { SliderComponent } from '../slider/slider.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { AddSoundService } from 'src/app/services/add-sound.service';
+import { DownloadedSound } from 'src/app/model/downloaded-sound.model';
+import { CommonModule, NgIf } from '@angular/common';
 
 @Component({
   selector: 'add-sound',
   templateUrl: './add-sound.html',
   standalone: true,
-  imports: [MatButtonModule, MatInputModule, MatDialogModule],
+  imports: [
+    MatButtonModule,
+    MatInputModule,
+    MatDialogModule,
+    CommonModule,
+    NgIf,
+  ],
 })
 export class AddSound {
   constructor(public dialog: MatDialog) {}
@@ -60,6 +68,7 @@ export class AddSound {
     MatButtonModule,
     MatIconModule,
     ReactiveFormsModule,
+    CommonModule,
   ],
 })
 export class AddSoundDialog implements OnInit {
@@ -67,6 +76,7 @@ export class AddSoundDialog implements OnInit {
 
   public fileName = '';
   public url = '';
+  public addedSound: DownloadedSound = { duration: 0, fileName: '' };
 
   constructor(
     public dialogRef: MatDialogRef<AddSoundDialog>,
@@ -75,10 +85,11 @@ export class AddSoundDialog implements OnInit {
 
   public addSound() {
     if (this.url && this.fileName) {
-      console.log(this.url, this.fileName, 'filename + url');
       this.addSoundService
         .saveSoundFromUrl(this.url, this.fileName)
-        .subscribe();
+        .subscribe((sound) => {
+          this.addedSound = sound;
+        });
     }
   }
 

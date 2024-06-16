@@ -1,7 +1,7 @@
-import {Component, OnInit} from "@angular/core";
-import {MatSliderModule} from "@angular/material/slider";
-import {FormsModule} from "@angular/forms";
-import {AddSoundService} from "../../services/add-sound.service";
+import { Component, Input, OnInit } from '@angular/core';
+import { MatSliderModule } from '@angular/material/slider';
+import { FormsModule } from '@angular/forms';
+import { AddSoundService } from '../../services/add-sound.service';
 
 @Component({
   selector: 'slider',
@@ -12,18 +12,15 @@ import {AddSoundService} from "../../services/add-sound.service";
 })
 export class SliderComponent implements OnInit {
   disabled = false;
-  max = 100;
+  @Input()
+  max: number = 0;
   min = 0;
   showTicks = true;
   step = 1;
   thumbLabel = true;
   begin = this.min;
-  end = this.max;
+  @Input()
+  end = 0;
 
-  constructor(private addSoundService: AddSoundService) {
-  }
-
-  ngOnInit() {
-
-  }
+  ngOnInit() {}
 }

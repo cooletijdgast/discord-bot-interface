@@ -1,22 +1,36 @@
 <mat-dialog-content>
   <mat-form-field class="example-full-width">
     <mat-label>Link</mat-label>
-    <input type="url" matInput [(ngModel)]="url" [formControl]="linkFormControl" placeholder="Ex. youtube.com">
+    <input
+      type="url"
+      matInput
+      [(ngModel)]="url"
+      [formControl]="linkFormControl"
+      placeholder="Ex. youtube.com"
+    />
     @if (linkFormControl.hasError('required')) {
-      <mat-error>Link is <strong>required</strong></mat-error>
+    <mat-error>Link is <strong>required</strong></mat-error>
     }
   </mat-form-field>
   <mat-form-field class="example-full-width">
     <mat-label>Filename</mat-label>
-    <input type="text" matInput [(ngModel)]="fileName" [formControl]="linkFormControl" placeholder="Ex. erica.mp3">
+    <input
+      type="text"
+      matInput
+      [(ngModel)]="fileName"
+      [formControl]="linkFormControl"
+      placeholder="Ex. erica.mp3"
+    />
     @if (linkFormControl.hasError('required')) {
-      <mat-error>Filename is <strong>required</strong></mat-error>
+    <mat-error>Filename is <strong>required</strong></mat-error>
     }
   </mat-form-field>
-  
-  <slider></slider><br>
+
+  <slider
+    *ngIf="addedSound.duration > 0"
+    [max]="addedSound.duration"
+    [end]="addedSound.duration"
+  ></slider
+  ><br />
   <a mat-raised-button (click)="addSound()">Download</a>
 </mat-dialog-content>
-
-
-

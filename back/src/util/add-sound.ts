@@ -1,12 +1,11 @@
 import { getAllSounds } from "./connection";
-import SoundModel from "../models/sound-model";
+import SoundModel from "../models/sound.model";
 import ytdl from "ytdl-core";
-import * as fs from "fs";
+import {createWriteStream} from "fs";
 import getAudioDurationInSeconds from "get-audio-duration";
-import { reject } from "lodash";
 
 export class Sound {
-  private soundFolderPath(fileName: string): string {
+  public soundFolderPath(fileName: string): string {
     if (!fileName.includes(".mp3")) {
       fileName += ".mp3";
     }
@@ -28,7 +27,7 @@ export class Sound {
       filter: "audioonly",
       quality: "highestaudio",
     });
-    const writeStream = fs.createWriteStream(this.soundFolderPath(fileName));
+    const writeStream = createWriteStream(this.soundFolderPath(fileName));
     readableStream.pipe(writeStream);
     const result = await new Promise<boolean>((resolve, reject) => {
       writeStream.on("finish", () => {
